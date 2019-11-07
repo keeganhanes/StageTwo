@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>U-District Parking</title>
+    <meta name="author" content="Keegan Hanes">
+    <meta name="description" content="Home Page for U-District Parking">
+    <meta name="keywords" content="UW, Parking, U-District, Map, Table">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stlesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+</head>
+
+<body>
+
+    <!--Nav bar, header and "Our Vision" Card-->
+    <section>
+        <!--Navigation Bar-->
+        <div class="navbar" role="navigation">
+            <nav>
+                <div class="nav-wrapper deep-purple darken-3" role="navigation color">
+                    <a href="#" class="brand-logo left">Home</a>
+                    <ul id="nav-mobile" class="right" role="button positions">
+                        <li class="nav-button" role="navigation button"><a href="../project-keeganhanes/info.html">Info</a></li>
+                        <li class="nav-button" role="navigation button"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!--Header-->
+        <header>
+            <h1>U-District Parking</h1>
+        </header>
+
+        <!--Our Vision Card-->
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l6 offset-l3" role="layout">
+                    <div class="card grey darken-1" role="textbox">
+                        <div class="card-content white-text hoverable center">
+                            <span class="card-title"><h2 id="vision">Our Vision</h2></span>
+                            <p>UD-Parking aims to protect the things students value the most; their <em>time</em> and 
+                                <em>money</em>. Whether you live in the U-District or are just visiting, UD-Parking 
+                                promises to prevent you from spending unnecessary time and money while trying to park.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    
+    <section>
+        <div class="row">
+            <!--Collection of potential map functionality for small and medium devices-->
+            <div class="row hide-on-large-only">   
+                <ul class="collection white-text" role="listbox">
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle deep-purple darken-3" role="icon">my_location</i>
+                        <span class="title">Current Location</span>
+                        <p>
+                            Your location in the U-District<br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle" role="icon">local_parking</i>
+                        <span class="title">Parking Available</span>
+                        <p>
+                            Icon displays amount of spots available and if a permit is needed <br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle yellow darken-2" role="icon">attach_money</i>
+                        <span class="title">Price</span>
+                        <p>
+                            Icon displays the price and available hours <br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle deep-purple darken-3" role="icon">accessible</i>
+                        <span class="title">Accessible</span>
+                        <p>
+                            This lot has handicap parking <br>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col s12 l4 hide-on-med-and-down" role="layout">
+                <!--Collection of potential map functionality for large devices-->
+                <ul class="collection white-text" role="listbox">
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle deep-purple darken-3" role="icon">my_location</i>
+                        <span class="title">Current Location</span>
+                        <p>
+                            Your location in the U-District<br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle" role="icon">local_parking</i>
+                        <span class="title">Parking Available</span>
+                        <p>
+                            Icon displays amount of spots available and if a permit is needed <br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle yellow darken-2" role="icon">attach_money</i>
+                        <span class="title">Price</span>
+                        <p>
+                            Icon displays the price and available hours <br>
+                        </p>
+                    </li>
+                    <li class="collection-item avatar grey darken-1" role="list design">
+                        <i class="material-icons circle deep-purple darken-3" role="icon">accessible</i>
+                        <span class="title">Accessible</span>
+                        <p>
+                            This lot has handicap parking <br>
+                        </p>
+                    </li>
+                </ul>
+                <!--Map-->
+                <div id="mapid"></div>
+            </div>
+
+            <!--Data Table-->
+            <div class="col s12 m12 l8" id="data-table" role="layout">
+                <div class="card grey lighten-2" role="table">
+                    <div class="card-content black-text">
+                        <span class="card-title center">
+                            <h3>
+                                Parking Availability
+                                <div class="preloader-wrapper small" role="progressbar">
+                                    <div class="spinner-layer spinner-yellow-only" role="progressbar color">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h3>
+                        </span>
+                            This data table displays a large majority of the parking lots available in the University District.
+                            Each row contains the Street the parking lot is on and the number of available, taken and handicap spots
+                            the lot has. While viewing the table on a medium sized device (a tablet), the sub area of the U-district 
+                            (North, East, South, West) will be shown and on a large device (desktop) the sub area and the lots peak hours
+                            will be shown. All data is relative to March 23rd of 2018 at 12PM.
+                        <div class="container">
+                            <div class="row">
+                                <div class="input-field" role="input">
+                                    <div class="col m6 l6" role="layout">
+                                        <input placeholder="Search for a street" id="street-name" type="text" onfocus="this.value=''" class="validate">
+                                        <a class="waves-effect waves-light btn deep-purple darken-3" id="submit" role="button">Submit</a>
+                                        <a class="waves-effect waves-light btn deep-purple darken-3" id="refresh" onclick="document.getElementById('street-name').value = ''" role="button">
+                                            <i class="material-icons" role="icon">refresh</i>
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6" role="layout">
+                                        <p class="hide-on-small-only show-on-medium-and-up">Order lots by greatest number of:</p>
+                                        <br>
+                                        <a class="waves-effect waves-light btn-small deep-purple darken-3 hide-on-small-only show-on-medium-and-up" id="open-spots" role="button">Available Spots</a>         
+                                        <a class="waves-effect waves-light btn-small deep-purple darken-3 hide-on-small-only show-on-medium-and-up" id="disabled" role="button">Handicap Spots</a>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="row show-on-small hide-on-med-and-up">
+                                <a class="hide-on-med-and-up show-on-small black-text center" id="orderText" role="text">Order lots by greatest number of:</a>
+                                <br>
+                                <a class="waves-effect waves-light btn deep-purple darken-3" id="open-spots2" role="button">Available Spots</a>  
+                                <a class="waves-effect waves-light btn deep-purple darken-3" id="disabled2" role="button">Handicap Spots</a>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="hide-on-small-only">Sub Area</th>
+                                    <th>Street Name</th>
+                                    <th class="hide-on-med-and-down">Peak Hour</th>
+                                    <th>Available Spots</th>
+                                    <th>Taken Spots</th>
+                                    <th>Handicap Spots</th>
+                                </tr>
+                            </thead>
+                            <tbody aria-live="polite">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!--Pagination (Allows you to scroll through pages)-->
+                    <ul class="pagination grey darken-1">
+                        <li class="disabled" id="chevron-left" role="button"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active deep-purple darken-3" id="page-1" role="button"><a href="#!">1</a></li>
+                        <li class="waves-effect" id="page-2" role="button"><a href="#!">2</a></li>
+                        <li class="waves-effect" id="page-3" role="button"><a href="#!">3</a></li>
+                        <li class="waves-effect" id="page-4" role="button"><a href="#!">4</a></li>
+                        <li class="waves-effect" id="page-5" role="button"><a href="#!">5</a></li>
+                        <li class="waves-effect" id="chevron-right" role="button"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!--Row with issue and inspiration card-->
+        <div class="row">
+
+            <!--The Issue Card-->
+            <div class="col s12 m5" role="layout">
+                <div class="card grey darken-1 medium hoverable" role="textbox">
+                    <div class="card-content white-text" role="text style">
+                        <span class="card-title"><h4>The Issue</h4></span>
+                        <p id="issue-text">
+                            The U-District is a very busy and populated area of Seattle with limited parking. 
+                            More than half of UW’s students live off campus and many of those students have cars. 
+                            When the place you usually park is completely full or you’re parking somewhere you 
+                            have never been before it can be frustrating to find a spot and even cause you to be 
+                            late to where you’re going. <br><br>
+                            And that's why we made UD-Parking! Our site provides an easy and convenient way to find the 
+                            best places to park and how much it’s going to cost, saving you your time and money.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--RYD Inspiration Card-->
+            <div class="col s12 m7" role="layout">
+                <div class="card grey darken-1 medium hoverable" role="textbox">
+                    <div class="card-content white-text" role="text style">
+                        <span class="card-title"><h4>Our Inspiration</h4></span>
+                        <p id="inspiration-text">
+                            “RYD” is a start up in Vancouver WA that acts like an Uber for employees at various 
+                            businesses around downtown. The service is free due to an agreement with the city to 
+                            fully fund it. RYD’s vision is not only to help transport employees to and from work but 
+                            to also take the general public where they need to go, free of charge. This idea came 
+                            about after several companies made complaints about how limited parking was for their 
+                            employees. <br><br>
+                            Although incorporating a service similar to RYD in Seattle would be much more difficult 
+                            considering the cities size, we believe there are still ways to help the situation. RYD
+                            has inspired us to act upon the growing parking issue within the U-District and in the
+                            future, all of Seattle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Contact Info-->
+    <section>
+        <div class="row">
+            <div class="col s12 m12" role="layout">
+                <div class="card grey darken-1" role="textbox">
+                    <div class="card-content white-text hoverable" role="text style">
+                        <span class="card-title"><h2 id="contact">Contact</h2></span>
+                        <ul>
+                            <li>
+                                Email: keeganhanes4@gmail.com
+                            </li>
+                            <li>
+                                Phone: (317)-900-3166
+                            </li>
+                            <li>
+                                Learn More: *website*
+                            </li>
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </section>
+
+    <!--JavaScript libraies-->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js" integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script src="js/index.js"></script>
+
+    <!--Footer with photo attributions and Copyright-->
+    <footer>
+        <small>Data from https://catalog.data.gov/dataset/annual-parking-study-data</small><br>
+        <small>&#169; Copyright 2018 Info340/project-keeganhanes</small>
+    </footer>
+</body>
+</html>
